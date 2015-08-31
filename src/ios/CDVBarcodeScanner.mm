@@ -397,6 +397,7 @@ parentViewController:(UIViewController*)parentViewController
 //--------------------------------------------------------------------------
 - (NSString*)setUpCaptureSession {
     NSError* error = nil;
+    BOOL torch = TRUE;
     
     AVCaptureSession* captureSession = [[AVCaptureSession alloc] init];
     self.captureSession = captureSession;
@@ -427,6 +428,11 @@ parentViewController:(UIViewController*)parentViewController
                     [device setSmoothAutoFocusEnabled:true];
                 }
                 [device setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
+                
+                if ([device hasTorch]) {
+                    device.torchMode = (torch)? AVCaptureTorchModeOn : AVCaptureTorchModeOff;
+                }
+                
                 [device unlockForConfiguration];
             }
         }
